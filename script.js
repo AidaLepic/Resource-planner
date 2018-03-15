@@ -2,7 +2,14 @@
 /********************Database script*******************/
 /*****************************************************/
 
-/*Database dio skripte sadrzi osnovne funkcije potrebne za odrzavanje indexedDB baze. IndexedDB baza sadrzi 4 object store-a. Prvi object store 'projects' se odnosi na projekte, sadrzi naziv projekta i ID projekta. Drugi object store 'teams' sadrzi podatke o timovima (naziv, ID). Treci object store 'employees' sadrzi podatke o zaposlenim (jmbg,ime,prezime te ID tima kojem pripada). U cetvrtom object store 'workHours' cuvaju se podaci o sedmicnoj normi zaposlenih, kljuc u spremanju jeste datum (ponedjeljak svake sedmice) te jmbg zaposlenog. Podaci o normi se cuvaju kao niz gdje index 0 niza odgovara Available (koliko je zaposlenik dostupan),a svaki sljedeci unos u niz jeste asociran sa projektom, index niza je ID projekta. Na taj nacin se dobija jednostavno povezivanje projekata i vremena provedenog na projektima, za svakog radnika. Sem izrade indexedDB ovaj dio sadrzi i osnovne funkcije potrebne za pristup podacima u object store-ima.*/ 
+/*Database dio skripte sadrzi osnovne funkcije potrebne za odrzavanje indexedDB baze. IndexedDB baza sadrzi 4 object store-a.
+Prvi object store 'projects' se odnosi na projekte, sadrzi naziv projekta i ID projekta. Drugi object store 'teams' sadrzi 
+podatke o timovima (naziv, ID). Treci object store 'employees' sadrzi podatke o zaposlenim (jmbg,ime,prezime te ID tima kojem pripada). 
+U cetvrtom object store 'workHours' cuvaju se podaci o sedmicnoj normi zaposlenih, kljuc u spremanju jeste datum 
+(ponedjeljak svake sedmice) te jmbg zaposlenog. Podaci o normi se cuvaju kao niz gdje index 0 niza odgovara Available 
+(koliko je zaposlenik dostupan),a svaki sljedeci unos u niz jeste asociran sa projektom, index niza je ID projekta. 
+Na taj nacin se dobija jednostavno povezivanje projekata i vremena provedenog na projektima, za svakog radnika. 
+Sem izrade indexedDB ovaj dio sadrzi i osnovne funkcije potrebne za pristup podacima u object store-ima.*/ 
 
 
 
@@ -405,7 +412,20 @@ function updateWorkHours(key,values,db){	//azuriranje podataka o radnoj normi za
 /***************************************************************************************************/
 
 
-/*Page javascript dio skripte se odnosi na sam rad aplikacije. Sadrzi funckije za prikaz izbornika, zatim prikaz tabele za izabrani tim i izabranu godinu, te prikaz popUp tabele za izabranog zaposlenika u izabranom mjesecu. Prilikom popunjavanja tabele koriste se funkcije definisane u database dijelu skripte da bi se lakse dobili podaci iz indexedDB. Nakon selektovanja tima i godine u izborniku klikom na button Show poziva se funkcija showTable(), koja kreira novu tabelu i iz indexedDB uzima podatke vezane za taj tim i tu godinu. To se radi pozivajuci funkcije getTeamByName(), getEmployeeByTeam(), getEntries(). Nakon dobijanja podataka poziva se funkcija calculateProcentage() koja racuna postotak za svaki mjesec i svakog zaposlenika te rezultat dodaje u celije tabele. Za svaku celiju tabele se dodaje ID koji sadrzi jmbg zaposlenika te godinu i mjesec za koji je vezan unos. Ovo omogucuje prikaz odgovarajuce popUp tabele na klik celije. Dakle, na klik celije poziva se funkcija popUp() koja pomocu podataka iz ID-a celije kreira novu tabelu s podacima koji se odnose na izabranog zaposlenika, u izabranom mjesecu. Podaci u ovoj tabeli su editable, sto znaci da se mogu unositi i mijenjati. Na klik button-a save poziva se funkcija upDate() u kojoj se svi podaci iz popUp tabele spremaju u niz, te se zatim azuriraju unosi u workHours object store-u, a zatim se radi ponovo proracun tabele o godisnjoj ucinkovitosti tima sa novounesenim podacima.*/
+/*Page javascript dio skripte se odnosi na sam rad aplikacije. Sadrzi funckije za prikaz izbornika, zatim prikaz tabele 
+za izabrani tim i izabranu godinu, te prikaz popUp tabele za izabranog zaposlenika u izabranom mjesecu. 
+Prilikom popunjavanja tabele koriste se funkcije definisane u database dijelu skripte da bi se lakse dobili podaci iz 
+indexedDB. Nakon selektovanja tima i godine u izborniku klikom na button Show poziva se funkcija showTable(), 
+koja kreira novu tabelu i iz indexedDB uzima podatke vezane za taj tim i tu godinu. 
+To se radi pozivajuci funkcije getTeamByName(), getEmployeeByTeam(), getEntries(). 
+Nakon dobijanja podataka poziva se funkcija calculateProcentage() koja racuna postotak za svaki mjesec i svakog zaposlenika 
+te rezultat dodaje u celije tabele. Za svaku celiju tabele se dodaje ID koji sadrzi jmbg zaposlenika te godinu i mjesec 
+za koji je vezan unos. Ovo omogucuje prikaz odgovarajuce popUp tabele na klik celije. 
+Dakle, na klik celije poziva se funkcija popUp() koja pomocu podataka iz ID-a celije kreira novu tabelu s podacima
+koji se odnose na izabranog zaposlenika, u izabranom mjesecu. Podaci u ovoj tabeli su editable, sto znaci da se mogu 
+unositi i mijenjati. Na klik button-a save poziva se funkcija upDate() u kojoj se svi podaci iz popUp tabele spremaju
+u niz, te se zatim azuriraju unosi u workHours object store-u, a zatim se radi ponovo proracun 
+tabele o godisnjoj ucinkovitosti tima sa novounesenim podacima.*/
 
 document.body.onload=add;	//poziv funkcije add() nakon ucitanja stranice
 
